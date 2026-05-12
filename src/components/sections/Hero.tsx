@@ -6,301 +6,346 @@ import { motion, useScroll, useTransform } from "framer-motion";
 const WA = "https://api.whatsapp.com/send/?phone=5521982516991";
 
 export function Hero() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const opacity  = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y       = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
     <section
-      ref={containerRef}
+      ref={ref}
       style={{
-        minHeight: "100svh",          /* svh = sem barra do browser mobile */
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        background: "linear-gradient(160deg, #e8f6fa 0%, #f4fafc 55%, #ffffff 100%)",
+        minHeight: "100svh",
+        background: "#ffffff",
         position: "relative",
         overflow: "hidden",
+        display: "flex",
+        alignItems: "stretch",
       }}
     >
-      {/* ── decoração de fundo ── */}
+      {/* ── faixa azul lateral esquerda (desktop) ── */}
+      <div className="hero-accent-bar" />
+
+      {/* ── blob decorativo ── */}
       <div aria-hidden style={{
-        position: "absolute", top: "-20%", right: "-15%",
-        width: "520px", height: "520px", borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(26,107,138,0.07) 0%, transparent 70%)",
+        position: "absolute", top: "-30%", right: "-10%",
+        width: "600px", height: "600px", borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(26,107,138,0.06) 0%, transparent 65%)",
         pointerEvents: "none",
       }} />
       <div aria-hidden style={{
-        position: "absolute", bottom: "-25%", left: "-12%",
-        width: "420px", height: "420px", borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(77,184,212,0.06) 0%, transparent 70%)",
+        position: "absolute", bottom: "-20%", left: "30%",
+        width: "400px", height: "400px", borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(77,184,212,0.05) 0%, transparent 65%)",
         pointerEvents: "none",
       }} />
-      {/* dente decorativo — só desktop */}
-      <div aria-hidden className="hero-tooth">
-        <svg width="340" height="340" viewBox="0 0 100 100" fill="#1a6b8a">
-          <path d="M50 5 C30 5,15 20,15 38 C15 55,22 65,28 75 C32 82,35 90,40 90 C44 90,46 85,50 85 C54 85,56 90,60 90 C65 90,68 82,72 75 C78 65,85 55,85 38 C85 20,70 5,50 5 Z"/>
-        </svg>
-      </div>
 
-      {/* ── conteúdo ── */}
-      <motion.div
-        style={{ y: contentY, opacity }}
-        className="container-xl hero-inner"
-      >
-        {/* tag line */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="hero-tag"
-        >
-          <span className="hero-tag-dot" />
-          Nova Iguaçu, RJ · Odontologia &amp; Estética
-        </motion.div>
+      {/* ── grid principal ── */}
+      <motion.div style={{ y, opacity }} className="container-xl hero-grid-wrap">
+        <div className="hero-grid">
 
-        {/* headline */}
-        <div style={{ overflow: "hidden" }}>
-          <motion.h1
-            initial={{ y: 60, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.28, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="hero-h1"
-          >
-            Sorrisos desenhados
-          </motion.h1>
-        </div>
-        <div style={{ overflow: "hidden" }}>
-          <motion.h1
-            initial={{ y: 60, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="hero-h1 hero-h1-gradient"
-          >
-            com precisão e arte.
-          </motion.h1>
-        </div>
+          {/* ── COLUNA ESQUERDA: texto ── */}
+          <div className="hero-text-col">
 
-        {/* subtítulo */}
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.54 }}
-          className="hero-sub"
-        >
-          Aparelho ortodôntico, preenchimento labial, clareamento, implantes
-          e muito mais — tudo com tecnologia de ponta e atendimento humanizado.
-        </motion.p>
+            {/* eyebrow */}
+            <motion.div
+              initial={{ opacity: 0, x: -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.55, delay: 0.15 }}
+              style={{ display: "flex", alignItems: "center", gap: "0.625rem", marginBottom: "1.5rem" }}
+            >
+              <div style={{ width: "2rem", height: "2px", background: "#1a6b8a", borderRadius: "2px", flexShrink: 0 }} />
+              <span style={{
+                fontFamily: "var(--font-inter), system-ui, sans-serif",
+                fontSize: "0.6875rem", fontWeight: 700,
+                letterSpacing: "0.14em", textTransform: "uppercase",
+                color: "#1a6b8a",
+              }}>
+                Nova Iguaçu, RJ · Odontologia &amp; Estética
+              </span>
+            </motion.div>
 
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.66 }}
-          className="hero-ctas"
-        >
-          <a href={WA} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg hero-btn-main">
-            <i className="bi bi-whatsapp" />
-            Agendar Avaliação Gratuita
-          </a>
-          <button
-            onClick={() => document.querySelector("#tratamentos")?.scrollIntoView({ behavior: "smooth" })}
-            className="btn btn-outline btn-lg"
-          >
-            Ver Tratamentos
-          </button>
-        </motion.div>
-
-        {/* diferenciais */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.82 }}
-          className="hero-badges"
-        >
-          {[
-            { icon: "bi-check-circle", text: "Avaliação gratuita" },
-            { icon: "bi-phone",        text: "Atendimento via WhatsApp" },
-            { icon: "bi-award",        text: "Especialistas certificados" },
-          ].map((b) => (
-            <div key={b.text} className="hero-badge-item">
-              <i className={b.icon} />
-              <span>{b.text}</span>
+            {/* headline */}
+            <div style={{ overflow: "hidden", marginBottom: "0.25rem" }}>
+              <motion.h1
+                initial={{ y: 64, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(2.6rem, 6vw, 4.75rem)",
+                  fontWeight: 600, lineHeight: 1.04,
+                  color: "#1a2e3a", letterSpacing: "-0.025em", margin: 0,
+                }}
+              >
+                Sorrisos que
+              </motion.h1>
             </div>
-          ))}
-        </motion.div>
+            <div style={{ overflow: "hidden", marginBottom: "0.25rem" }}>
+              <motion.h1
+                initial={{ y: 64, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(2.6rem, 6vw, 4.75rem)",
+                  fontWeight: 600, lineHeight: 1.04,
+                  color: "#1a2e3a", letterSpacing: "-0.025em", margin: 0,
+                }}
+              >
+                transformam
+              </motion.h1>
+            </div>
+            <div style={{ overflow: "hidden", marginBottom: "1.75rem" }}>
+              <motion.h1
+                initial={{ y: 64, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.48, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  fontFamily: "var(--font-cormorant), Georgia, serif",
+                  fontSize: "clamp(2.6rem, 6vw, 4.75rem)",
+                  fontWeight: 600, lineHeight: 1.04,
+                  letterSpacing: "-0.025em", margin: 0,
+                  fontStyle: "italic",
+                  background: "linear-gradient(135deg, #1a6b8a 0%, #4db8d4 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                vidas.
+              </motion.h1>
+            </div>
+
+            {/* subtítulo */}
+            <motion.p
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.58 }}
+              style={{
+                fontFamily: "var(--font-inter), system-ui, sans-serif",
+                fontSize: "clamp(0.9375rem, 2vw, 1.0625rem)",
+                color: "#5a7a8a", lineHeight: 1.72,
+                maxWidth: "440px", marginBottom: "2rem", fontWeight: 400,
+              }}
+            >
+              Aparelho ortodôntico, preenchimento labial, clareamento,
+              implantes e muito mais — com tecnologia de ponta e
+              atendimento verdadeiramente humano.
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginBottom: "2.25rem" }}
+            >
+              <a
+                href={WA}
+                target="_blank" rel="noopener noreferrer"
+                className="btn btn-primary btn-lg"
+                style={{ gap: "0.5rem" }}
+              >
+                <i className="bi bi-whatsapp" style={{ fontSize: "1.05rem" }} />
+                Agendar Avaliação Gratuita
+              </a>
+              <button
+                onClick={() => document.querySelector("#tratamentos")?.scrollIntoView({ behavior: "smooth" })}
+                className="btn btn-outline btn-lg"
+              >
+                Ver Tratamentos
+              </button>
+            </motion.div>
+
+            {/* trust row */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.85 }}
+              style={{
+                display: "flex", flexWrap: "wrap", gap: "1.25rem",
+                paddingTop: "1.5rem", borderTop: "1px solid #e4edf2",
+              }}
+            >
+              {[
+                { icon: "bi-check2-circle", label: "Avaliação gratuita" },
+                { icon: "bi-shield-check",  label: "Especialistas certificados" },
+                { icon: "bi-whatsapp",      label: "Atendimento via WhatsApp" },
+              ].map((t) => (
+                <div key={t.label} style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <i className={`bi ${t.icon}`} style={{ color: "#1a6b8a", fontSize: "0.9rem" }} />
+                  <span style={{
+                    fontFamily: "var(--font-inter), system-ui, sans-serif",
+                    fontSize: "0.8125rem", color: "#5a7a8a",
+                  }}>
+                    {t.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* ── COLUNA DIREITA: foto dos doutores ── */}
+          <motion.div
+            className="hero-img-col"
+            initial={{ opacity: 0, scale: 0.97, x: 24 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {/* card da foto */}
+            <div style={{
+              position: "relative",
+              borderRadius: "24px",
+              overflow: "hidden",
+              background: "linear-gradient(160deg, #e8f6fa 0%, #d4edf5 100%)",
+              boxShadow: "0 24px 64px rgba(26,107,138,0.16), 0 4px 16px rgba(26,107,138,0.08)",
+            }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/quemsomos.png"
+                alt="Dra. Taiane Valadares e Dr. João Gilberto"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                  objectFit: "contain",
+                }}
+              />
+
+              {/* badge flutuante */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1, duration: 0.55 }}
+                style={{
+                  position: "absolute", bottom: "1.25rem", left: "1.25rem",
+                  background: "rgba(255,255,255,0.95)",
+                  backdropFilter: "blur(12px)",
+                  borderRadius: "14px",
+                  padding: "0.875rem 1.125rem",
+                  boxShadow: "0 8px 28px rgba(26,107,138,0.14)",
+                  border: "1px solid rgba(255,255,255,0.8)",
+                  display: "flex", alignItems: "center", gap: "0.75rem",
+                }}
+              >
+                <div style={{
+                  width: "2.5rem", height: "2.5rem", borderRadius: "50%",
+                  background: "linear-gradient(135deg, #1a6b8a, #4db8d4)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  flexShrink: 0,
+                }}>
+                  <i className="bi bi-tooth" style={{ color: "#fff", fontSize: "1.1rem" }} />
+                </div>
+                <div>
+                  <div style={{
+                    fontFamily: "var(--font-inter), system-ui, sans-serif",
+                    fontSize: "0.8125rem", fontWeight: 700, color: "#1a2e3a",
+                    lineHeight: 1.2,
+                  }}>
+                    Dra. Taiane &amp; Dr. João
+                  </div>
+                  <div style={{
+                    fontFamily: "var(--font-inter), system-ui, sans-serif",
+                    fontSize: "0.6875rem", color: "#5a7a8a", marginTop: "2px",
+                  }}>
+                    Especialistas em Odontologia
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
+        </div>
       </motion.div>
 
       {/* scroll indicator */}
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.3 }}
+        transition={{ delay: 1.4 }}
         onClick={() => document.querySelector("#sobre")?.scrollIntoView({ behavior: "smooth" })}
-        className="hero-scroll"
         aria-label="Rolar para baixo"
+        style={{
+          position: "absolute", bottom: "1.5rem", left: "50%",
+          transform: "translateX(-50%)",
+          background: "none", border: "none", cursor: "pointer",
+          display: "flex", flexDirection: "column", alignItems: "center", gap: "4px",
+          zIndex: 3, padding: 0,
+        }}
       >
         <motion.div
           animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="hero-scroll-line"
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            width: "1px", height: "32px",
+            background: "linear-gradient(to bottom, #1a6b8a, transparent)",
+          }}
         />
-        <i className="bi bi-chevron-down hero-scroll-icon" />
+        <i className="bi bi-chevron-down" style={{ fontSize: "0.75rem", color: "#8aa5b0" }} />
       </motion.button>
 
       <style>{`
-        /* ── hero inner ── */
-        .hero-inner {
-          position: relative;
-          z-index: 2;
-          padding-top: calc(64px + 1.25rem);  /* navbar + espaço compacto */
-          padding-bottom: 4.5rem;
-          max-width: 720px;
-        }
-
-        /* ── tag ── */
-        .hero-tag {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-family: var(--font-inter), system-ui, sans-serif;
-          font-size: 0.75rem;
-          font-weight: 600;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          color: #1a6b8a;
-          background: rgba(26,107,138,0.07);
-          border: 1px solid rgba(26,107,138,0.15);
-          border-radius: 100px;
-          padding: 0.3rem 0.875rem;
-          margin-bottom: 1.25rem;
-        }
-        .hero-tag-dot {
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: #1a6b8a;
-          flex-shrink: 0;
-          animation: pulse-dot 2s ease-in-out infinite;
-        }
-        @keyframes pulse-dot {
-          0%,100% { opacity: 1; transform: scale(1); }
-          50%      { opacity: 0.5; transform: scale(0.7); }
-        }
-
-        /* ── headline ── */
-        .hero-h1 {
-          font-family: var(--font-cormorant), Georgia, serif;
-          font-size: clamp(2.4rem, 9vw, 5rem);
-          font-weight: 600;
-          line-height: 1.04;
-          color: #1a2e3a;
-          letter-spacing: -0.025em;
-          margin: 0;
-        }
-        .hero-h1-gradient {
-          font-style: italic;
-          background: linear-gradient(135deg, #1a6b8a 0%, #4db8d4 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          margin-bottom: 1.25rem;
-        }
-
-        /* ── subtítulo ── */
-        .hero-sub {
-          font-family: var(--font-inter), system-ui, sans-serif;
-          font-size: clamp(0.9rem, 2.5vw, 1.0625rem);
-          color: #5a7a8a;
-          line-height: 1.72;
-          max-width: 500px;
-          margin-bottom: 1.75rem;
-          font-weight: 400;
-        }
-
-        /* ── CTAs ── */
-        .hero-ctas {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.75rem;
-          align-items: center;
-          margin-bottom: 1.75rem;
-        }
-        .hero-btn-main { gap: 0.5rem; }
-
-        /* ── diferenciais ── */
-        .hero-badges {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.75rem;
-          padding-top: 1.5rem;
-          border-top: 1px solid #d4e8f0;
-        }
-        .hero-badge-item {
-          display: flex;
-          align-items: center;
-          gap: 0.375rem;
-          font-family: var(--font-inter), system-ui, sans-serif;
-          font-size: 0.8125rem;
-          color: #5a7a8a;
-          font-weight: 400;
-        }
-        .hero-badge-item i {
-          color: #1a6b8a;
-          font-size: 0.875rem;
-        }
-
-        /* ── scroll indicator ── */
-        .hero-scroll {
-          position: absolute;
-          bottom: 1.5rem;
-          left: 50%;
-          transform: translateX(-50%);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0.25rem;
-          background: none;
-          border: none;
-          cursor: pointer;
-          z-index: 3;
-          padding: 0;
-        }
-        .hero-scroll-line {
-          width: 1px;
-          height: 28px;
-          background: linear-gradient(to bottom, #1a6b8a, transparent);
-        }
-        .hero-scroll-icon {
-          font-size: 0.75rem;
-          color: #8aa5b0;
-        }
-
-        /* ── dente decorativo ── */
-        .hero-tooth {
+        /* ── faixa lateral azul (desktop) ── */
+        .hero-accent-bar {
           display: none;
           position: absolute;
-          right: 3%;
-          bottom: 4%;
-          opacity: 0.04;
-          pointer-events: none;
+          left: 0; top: 0; bottom: 0;
+          width: 4px;
+          background: linear-gradient(to bottom, #1a6b8a, #4db8d4);
+        }
+
+        /* ── wrap geral ── */
+        .hero-grid-wrap {
+          position: relative;
+          z-index: 2;
+          width: 100%;
+          display: flex;
+          align-items: center;
+        }
+
+        /* ── grid ── */
+        .hero-grid {
+          width: 100%;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2.5rem;
+          align-items: center;
+          /* mobile: padding abaixo da navbar */
+          padding-top: calc(64px + 1.5rem);
+          padding-bottom: 5rem;
+        }
+
+        /* ── coluna imagem: escondida no mobile ── */
+        .hero-img-col { display: none; }
+
+        /* ── tablet ── */
+        @media (min-width: 768px) {
+          .hero-grid {
+            padding-top: calc(72px + 2rem);
+            padding-bottom: 5.5rem;
+          }
         }
 
         /* ── desktop ── */
-        @media (min-width: 768px) {
-          .hero-inner {
-            padding-top: calc(72px + 2.5rem);
-            padding-bottom: 5.5rem;
+        @media (min-width: 1024px) {
+          .hero-accent-bar { display: block; }
+          .hero-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding-top: calc(80px + 3rem);
+            padding-bottom: 6rem;
+            align-items: center;
           }
-          .hero-tooth { display: block; }
+          .hero-img-col {
+            display: block;
+          }
         }
 
-        @media (min-width: 1024px) {
-          .hero-inner {
-            padding-top: calc(80px + 3rem);
+        @media (min-width: 1280px) {
+          .hero-grid {
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 5rem;
           }
         }
       `}</style>
