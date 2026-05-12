@@ -52,27 +52,11 @@ export function Hero() {
         style={{ y: contentY, opacity }}
         className="container-xl hero-inner"
       >
-        {/* logo */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.1 }}
-          className="hero-logo-wrap"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/logo.png"
-            alt="JT Odontologia"
-            className="hero-logo"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-          />
-        </motion.div>
-
         {/* tag line */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.18 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
           className="hero-tag"
         >
           <span className="hero-tag-dot" />
@@ -173,19 +157,9 @@ export function Hero() {
         .hero-inner {
           position: relative;
           z-index: 2;
-          padding-top: calc(64px + 2rem);   /* navbar + espaço mínimo */
-          padding-bottom: 5rem;
+          padding-top: calc(64px + 1.25rem);  /* navbar + espaço compacto */
+          padding-bottom: 4.5rem;
           max-width: 720px;
-        }
-
-        /* ── logo ── */
-        .hero-logo-wrap { margin-bottom: 1.25rem; }
-        .hero-logo {
-          height: 44px;
-          width: auto;
-          object-fit: contain;
-          border-radius: 10px;
-          display: block;
         }
 
         /* ── tag ── */
@@ -318,16 +292,15 @@ export function Hero() {
         /* ── desktop ── */
         @media (min-width: 768px) {
           .hero-inner {
-            padding-top: calc(72px + 3.5rem);
-            padding-bottom: 6rem;
+            padding-top: calc(72px + 2.5rem);
+            padding-bottom: 5.5rem;
           }
-          .hero-logo { height: 52px; }
           .hero-tooth { display: block; }
         }
 
         @media (min-width: 1024px) {
           .hero-inner {
-            padding-top: calc(80px + 4rem);
+            padding-top: calc(80px + 3rem);
           }
         }
       `}</style>

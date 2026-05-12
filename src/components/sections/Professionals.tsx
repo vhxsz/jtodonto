@@ -143,17 +143,24 @@ export function Professionals() {
             style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2.5rem", alignItems: "start" }}
           >
             {/* foto */}
-            <div style={{ position: "relative", maxWidth: "360px" }}>
+            <div style={{ position: "relative", maxWidth: "380px" }}>
               <div style={{
-                aspectRatio: "3/4", borderRadius: "16px",
-                border: "1px solid #d4e8f0", overflow: "hidden",
-                background: prof.color, position: "relative",
+                borderRadius: "16px",
+                border: "1px solid #d4e8f0",
+                overflow: "hidden",
+                background: prof.color,
               }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={prof.image}
                   alt={prof.name}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block" }}
+                  style={{
+                    width: "100%",
+                    height: "auto",          /* altura natural — sem corte */
+                    display: "block",
+                    objectFit: "contain",
+                    objectPosition: "center bottom",
+                  }}
                 />
               </div>
 
