@@ -78,25 +78,16 @@ export function Navbar() {
       >
         <div className="container-xl" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
 
-          {/* ── Logo (só texto, sem imagem) ── */}
+          {/* ── Logo (só texto) ── */}
           <a
             href="#"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-            style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}
+            style={{ textDecoration: "none", display: "flex", alignItems: "center", flexShrink: 0 }}
           >
-            <div style={{
-              width: "2rem", height: "2rem", borderRadius: "8px",
-              background: "linear-gradient(135deg, #1a6b8a 0%, #4db8d4 100%)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#fff", flexShrink: 0,
-              boxShadow: "0 2px 8px rgba(26,107,138,0.25)",
-            }}>
-              <i className="bi bi-tooth" style={{ fontSize: "0.9rem" }} />
-            </div>
             <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
               <span style={{
                 fontFamily: "var(--font-cormorant), Georgia, serif",
-                fontSize: "1.2rem", fontWeight: 700,
+                fontSize: "1.3rem", fontWeight: 700,
                 color: "#1a6b8a", letterSpacing: "0.02em", lineHeight: 1.15,
               }}>
                 JT Odontologia
