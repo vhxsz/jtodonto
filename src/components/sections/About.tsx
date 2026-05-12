@@ -170,7 +170,6 @@ export function About() {
             style={{ position: "relative" }}
           >
             <div style={{
-              aspectRatio: "4/3",
               borderRadius: "16px",
               border: "1px solid #d4e8f0",
               overflow: "hidden",
@@ -182,10 +181,9 @@ export function About() {
                 alt="Equipe JT Odontologia"
                 style={{
                   width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  objectPosition: "center",
+                  height: "auto",
                   display: "block",
+                  objectFit: "contain",
                 }}
               />
             </div>
